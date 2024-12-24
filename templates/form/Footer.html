@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title >OFFERKZ</title>
+    <link href="{% static 'main/index.css' %}" rel="stylesheet">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Oxanium:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+    <div class="header_container">
+        <div class="icon-container">
+            <a href="{% url 'active' %}">OFFER-KZ</a>
+        </div>
+        <div class="nav-container">
+            <div class="nav-half"></div>
+            <div class="nav-li">
+                <div class="ul-part">
+                    <ul>
+                        <li><a class="{{ linkFind }}" href="{% url 'tasks' %}">Выполнять задания</a></li>
+                        <li><a class="{{ linkUpload }}" href="{% url 'upload' %}" style="text-decoration: none" >Загрузить задание</a></li>
+                    </ul>
+                </div>
+                <div class="account-part" id="profileIcon">
+                    <div class="account-img">
+                        {% if user.photo %}
+                        <img src="{{ user.photo.url }}">
+                        {% else %}
+                            <img src="{% static 'default/default.jpg' %}">
+                        {% endif %}
+                    </div>
+                    <div class="name-part"  style="font-size: {{ sizeOfName }}px">
+                        <a>{{ user.username }} <i class="bi bi-caret-down-fill"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="profile-dropdown" id="profileDropDown">
+    <ul>
+        <li><a style="{{linkProfile}}" href="{% url 'profile' user.username %}"><i class="bi bi-person-fill"></i> Профиль</a></li>
+        <li><a style="{{linkUpload}}"><i class="bi bi-wallet2"></i> Балланс: {{ user.balance }}₸</a></li>
+        <li><a href="{% url 'logout' %}" style="{{ linkLogout}}"><i class="bi bi-box-arrow-right"></i> Выйти</a></li>
+    </ul>
+    </div>
+</div>
+ {% block content %}
+     
+    {% endblock %}
+</body>
+<script src="{% static 'main/main.js' %}"></script>
+<script>
+
+const profileIcon = document.getElementById('profileIcon');
+const profileDropdown = document.getElementById('profileDropDown');
+
+
+profileIcon.addEventListener('click', function() {
+
+    if (!profileDropdown.classList.contains('show')) {
+        profileDropdown.classList.add('show');
+    } else {
+        profileDropdown.classList.remove('show');
+    }
+});
+
+
+document.addEventListener('click', function(event) {
+    if (!profileIcon.contains(event.target) && !profileDropdown.contains(event.target)) {
+        profileDropdown.classList.remove('show');
+    }
+});
+
+</script>
+</html>

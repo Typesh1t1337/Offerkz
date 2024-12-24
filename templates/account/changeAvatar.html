@@ -1,0 +1,49 @@
+{% extends 'form/accountForm.html' %}
+{% block interact %}
+<div class="user-interact-content-container">
+    <div class="edit-page-bounce">
+        <ul>
+            <li><a href="{% url 'edit' user.username %}" class="a-not-active">Редактировать профиль</a></li>
+            <li><a href="{% url 'password' user.username %}" class="a-not-active">Поменять пароль</a></li>
+            <li><a href="{% url 'avatar' user.username %}" class="a-active">Поменять фото</a></li>
+        </ul>
+    </div>
+    <form  method="post" style="height: 40%" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="action-description">
+            <h1>Загрузить фотографию</h1>
+        </div>
+        <div class="input-container">
+           {{ form.as_p }}
+            <label for="photo-input">
+                <i class="bi bi-upload"></i>Выберите изображение
+            </label>
+        </div>
+        <div class="upload-photo-button">
+            <button>
+                Загрузить
+            </button>
+        </div>
+    </form>
+    <div class="preview-container" id="image-preview">
+
+    </div>
+</div>
+    <script>
+     function previewImage(event) {
+            var preview = document.getElementById('image-preview');
+            var file = event.target.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                preview.innerHTML = '<img src="' + e.target.result + '" alt="Preview">';
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.innerHTML = '';
+            }
+        }
+    </script>
+{% endblock %}

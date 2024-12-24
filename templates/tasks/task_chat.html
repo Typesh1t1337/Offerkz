@@ -1,0 +1,78 @@
+{% include 'form/Footer.html' %}
+{% load static %}
+<div class="task-interact-page">
+    <div class="task-interact-page-content">
+        <div class="task-info-page-part-content">
+            <div class="task-info-page-content">
+                <div class="task-info-title">
+                   <h1>{{ task.title }}</h1>
+                </div>
+                <div class="task-info">
+                    <p>Заказчик:</p><a href="">{{ task.author }}</a>
+                </div>
+                <div class="task-info">
+                    <p>Категория:</p><a>{{ task.category }}</a>
+                </div>
+                <div class="task-info">
+                    <p>Оплата:</p><a>{{ task.price }}₸</a>
+                </div>
+                <div class="task-info-desc">
+                    <p style="color: #00897B">Описание: </p><p class="desc">{{ task.description }}</p>
+                </div>
+                <div class="interact-task-buttons">
+                    <form method="post" action="{% url 'alter_value_assignment' task.id task.author_id user.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" value="deny" class="deny-from-task" name="action">Отказаться</button>
+                        <button type="submit" value="submit" class="submit-task" name="action">Отметить как завершенное</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="task-chat-page">
+            <div class="chat-report-receiver-panel">
+                <div class="img-receiver-panel">
+                   <img src="{{ user_avatar_url }}">
+                </div>
+                <div class="name-receiver-panel">
+                    <a>{{ task.author }}</a>
+                </div>
+            </div>
+            <div class="task-chat-page-content">
+                <div class="messages-content">
+                    {% for message in messages %}
+                        {% if message.sender_id == user.pk %}
+                            <div class="sender">
+                                <div class="message-sender">
+                                    <p>{{ message.message }}</p>
+                                </div>
+                            </div>
+                        {% elif message.sender_id == task.author_id %}
+                            <div class="receiver">
+                                <div class="receiver-avatar">
+                                    <img src="{{ user_avatar_url }}">
+                                </div>
+                                <div class="receive-content">
+                                    <div class="report">
+                                        <p>{{ message.message }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+                <div class="report-send-panel">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="input-container">
+                            <input type="text" placeholder="Сообщение" name="report">
+                            <div class="icons">
+                                <i class="bi bi-send-fill"></i>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

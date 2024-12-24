@@ -1,0 +1,41 @@
+{% extends 'form/accountForm.html' %}
+{% block interact %}
+{% load static %}
+<div class="user-interact-content-container">
+     <div class="tasks-page-bounce">
+            <ul>
+                <li><a href="{% url 'my_tasks' user.username %}" class="a-not-active">Мои задания</a></li>
+                <li><a href="{% url 'my_task_chats' user.username %}" class="a-active">Чаты с исполнительями</a></li>
+                <li><a href="{% url 'upload'%}" class="a-not-active">Загрузить задание</a></li>
+            </ul>
+    </div>
+    <div class="my-chats-container">
+        <div class="my-chats-container-overflow">
+            {% for chat in chats %}
+                <a href="{% url 'my_task_chat_page' chat.task.id chat.first_user_id chat.second_user_id %}" style="text-decoration: none">
+                    <div class="chats-card">
+                        <div class="chats-card-avatar">
+                            <img src="{% static 'default/default.jpg' %}">
+                        </div>
+                        <div class="chats-card-content">
+                            <div class="name-of-sender">
+                                <p class="name">
+                                    {{ chat.first_user }}
+                                </p>
+                                <p class="name">
+                                    {{ chat.task }}
+                                </p>
+                            </div>
+                            <div class="report-of-sender">
+                                <p>
+                                    {{ chat.latest_message }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

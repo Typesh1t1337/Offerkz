@@ -1,0 +1,40 @@
+{% extends 'form/Footer.html' %}
+{% load static %}
+{% block content %}
+        <div class="profile-page">
+            <div class="profile-page-content">
+                <div class="user-nav-container">
+                    <div class="user-nav-img-container">
+                        {% if user.photo %}
+                            <img src="{{ user.photo.url }}">
+                        {% else %}
+                            <img src="{% static 'default/default.jpg' %}">
+                        {% endif %}
+                    </div>
+                    <div class="user-nav-links-container">
+                        <div class="user-info-container">
+                            <ul>
+                                {% if user.first_name and user.last_name %}
+                                    <li style="font-size : {{user_name_size }}px" class="nav-name">{{ user.first_name }} {{ user.last_name }}</li>
+                                {% else %}
+                                    <li class="nav-name" style="font-size: {{ size }}px">{{ user.username }}</li>
+                                {% endif %}
+                                <li class="nav-balance">Баланс: {{ user.balance }}₸</li>
+                                <li class="{{ nav_status.0}}"><a class="{{ a_status.0 }}" href="{%url 'profile' user.username %}">Профиль </a></li>
+                                <li class="{{ nav_status.1 }}"><a href="{% url 'my_tasks' user.username %}" class="{{ a_status.1}}">Мои задания</a></li>
+                                <li class="{{ nav_status.2 }}"> <a class="{{ a_status.2 }}" href="{% url 'edit' user.username %}">Редактировать профиль</a></li>
+                                <li class="{{ nav_status.3 }}"><a class="{{ a_status.3 }}">Пополнить баланс</a></li>
+                                <li class="{{ nav_status.4 }}"><a {{ a_status.4 }} >Вывести</a></li>
+                                <li class="nav-not-active"><a class="a-not-active" href="{% url 'logout' %}">выйти</a></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            <div class="user-interact-container">
+                {% block interact %}
+                {% endblock %}
+            </div>
+            </div>
+        </div>
+{% endblock %}

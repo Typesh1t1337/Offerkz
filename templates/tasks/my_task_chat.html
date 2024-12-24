@@ -1,0 +1,52 @@
+{% extends 'form/accountForm.html' %}
+{% load static %}
+{% block interact %}
+<div class="user-interact-content-container">
+        <div class="task-chat-page">
+            <div class="chat-report-receiver-panel">
+                <div class="img-receiver-panel">
+                   <img src="{{ avatar_url }}">
+                </div>
+                <div class="name-receiver-panel">
+                    <a>{{ chat.0.first_user }}</a>
+                </div>
+            </div>
+            <div class="task-chat-page-content">
+                <div class="messages-content">
+                    {% for message in messages %}
+                        {% if message.sender_id == user.pk %}
+                            <div class="sender">
+                                <div class="message-sender">
+                                    <p>{{ message.message }}</p>
+                                </div>
+                            </div>
+                        {% elif message.receiver_id == task.author_id %}
+                            <div class="receiver">
+                                <div class="receiver-avatar">
+                                    <img src="{{ avatar_url }}">
+                                </div>
+                                <div class="receive-content">
+                                    <div class="report">
+                                        <p>{{ message.message }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+                <div class="report-send-panel">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="input-container">
+                            <input type="text" placeholder="Сообщение" name="report">
+                            <div class="icons">
+                                <i class="bi bi-send-fill"></i>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}

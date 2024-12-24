@@ -1,0 +1,30 @@
+{% include 'form/Footer.html' %}
+<div class="interact-with-task-container">
+    <div class="interact-with-task-inner-container">
+        <div class="interact-with-task-inner-title">
+            <h1>{{ task.title }}</h1>
+        </div>
+        <div class="interact-with-task-inner-author">
+            <p>Заказчик: </p><a href="">{{ task.author }}</a>
+        </div>
+        <div class="interact-with-task-inner-price">
+            <p>Оплата:</p><p class="price">{{ task.price }}₸</p>
+        </div>
+          <div class="interact-with-task-inner-price">
+            <p>Категория: </p><p class="price">{{ task.category }}</p>
+        </div>
+        <div class="interact-with-task-inner-desc">
+            <p>
+                Описание: {{ task.description }}
+            </p>
+        </div>
+        <div class="interact-with-task-inner-button">
+            <form style="display: flex;flex-direction: column;justify-content: center;align-items: center" method="post">
+                {% csrf_token %}
+                <input type="hidden" value ="{{ task.author_id }}" name="task_author">
+                <button type="submit">Откликнуться</button>
+                <a href="{% url 'tasks' %}">Вернуться назад</a>
+            </form>
+        </div>
+    </div>
+</div>

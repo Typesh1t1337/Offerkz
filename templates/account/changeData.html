@@ -1,0 +1,56 @@
+{% extends 'form/accountForm.html' %}
+{% block interact%}
+<div class="user-interact-content-container">
+    <div class="edit-page-bounce">
+        <ul>
+            <li><a href="{% url 'edit' user.username %}" class="a-active">Редактировать профиль</a></li>
+            <li><a href="{% url 'password' user.username %}" class="a-not-active">Поменять пароль</a></li>
+            <li><a href="{% url 'avatar' user.username %}" class="a-not-active">Поменять аватар</a></li>
+        </ul>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <div class="edit-title"></div>
+        <div class="edit-container">
+            <div class="edit-label">
+                <label for="login">Поменять Логин:</label>
+            </div>
+            <div class="edit-input">
+                <input type="text" name="login" value="{{ user.username }}" id="login">
+                <i style="color: red;font-size: 14px;margin-left: 5px">
+                    {{ error_login }}
+                </i>
+            </div>
+        </div>
+         <div class="edit-container">
+             <div class="edit-label">
+                <label for="email">Поменять почту:</label>
+             </div>
+             <div class="edit-input">
+                <input type="email" name="email" value="{{ user.email }}" id="email">
+             </div>
+        </div>
+        <div class="edit-container">
+            <div class="edit-label">
+                <label for="first_name">Поменять имя:</label>
+            </div>
+            <div class="edit-input">
+                <input type="text" name="first_name" value="{{ user.first_name }}" id="first_name">
+            </div>
+        </div>
+        <div class="edit-container">
+            <div class="edit-label">
+                <label for="last_name">Поменять Фамилию:</label>
+            </div>
+            <div class="edit-input">
+                <input type="text" name="last_name" value="{{ user.last_name }}" id="last_name">
+            </div>
+        </div>
+        <div class="edit-button">
+            <button type="submit">
+                Сохранить
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

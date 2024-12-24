@@ -1,0 +1,146 @@
+{% include 'form/Footer.html' %}
+<div class="main-tasks-side">
+    <div class="main-tasks-side-content">
+        <div class="search-tasks-part">
+            <form method="get">
+                {% csrf_token %}
+                <div class="top-side">
+                    <div class="search-side">
+                        {{ filter_form.query }}
+                        {{ filter_form.category }}
+                    </div>
+                </div>
+                <div class="bottom-side">
+                    <div class="filters">
+                        <div class="filter-price">
+                            <div class="label-price-filter">
+                                <p>Цена ₸</p>
+                            </div>
+                            <div class="inputs">
+                              {{ filter_form.price_min }}
+                                {{ filter_form.price_max }}
+                            </div>
+                        </div>
+                         <div class="filter-price">
+                            <div class="label-price-filter"  style="display: flex;justify-content: center;align-items: center">
+                                <div style="width:63%; display: flex;justify-content: flex-start;align-items: center">
+                                    <p>Дата</p>
+                                </div>
+                            </div>
+                            <div class="inputs"  style="display: flex;justify-content: center;align-items: center">
+                               {{ filter_form.order_by_time }}
+                            </div>
+                        </div>
+                         <div class="filter-price">
+                            <div class="label-price-filter"  style="display: flex;justify-content: center;align-items: center">
+                                <div style="width:63%; display: flex;justify-content: flex-start;align-items: center">
+                                    <p>Цена</p>
+                                </div>
+                            </div>
+                            <div class="inputs" style="display: flex;justify-content: center;align-items: center">
+                                {{ filter_form.order_by_price }}
+                            </div>
+                        </div>
+                        <div class="filter-price" style="justify-content:center;align-items:flex-end;display: flex ">
+                            {% if is_filter %}
+                                <button type="button" id="reset">Сбросить</button>
+                                 <button type="submit" style="width: 0;height: 0;background-color: transparent"></button>
+                            {% else %}
+                                <button type="submit">Применить</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div style="width: 100%; height:20px"></div>
+        <div class="tasks-list-container">
+            <div class="tasks-list-container-content">
+                {%  for task in tasks %}
+                        <div class="task-form">
+                            <div class="task-form-content">
+                                <a href="{% url 'task' task.id user.pk task.author_id %}">
+                                    <div class="task-form-text-side">
+                                        <h1>{{ task.title }}</h1>
+                                        <i class="bi bi-briefcase-fill"></i>
+                                    </div>
+                                    <div class="task-form-text-side-desc">
+                                            <p class="task-desc"> {{ task.description }}</p>
+                                    </div>
+                                    <div class="task-form-text-side-etc">
+                                        <div class="task-form-text-side-bigger">
+                                            <p class="task-author">Заказчик: {{ task.author }}</p>
+                                            <p class="task-category">Категория: {{ task.category }}</p>
+                                            <p class="task-deadline-time"> Дата Дедлайна: {{ task.deadline }}</p>
+                                        </div>
+                                        <div class="task-form-text-side-smaller">
+                                            <p class="task-price">Оплата: {{ task.price }}₸</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                {% endfor %}
+            </div>
+        </div>
+    <div class="Paginator">
+        <div class="Paginator-content">
+                    {% for p in paginator.page_range %}
+                        {% if page_obj.number == p %}
+                            <a href="?page{{ p }}" class="paginator-block">{{ p }}</a>
+                        {% else %}
+                            <a href="?page={{ p }}" class="paginator-block-not-active">{{ p }}</a>
+                        {% endif %}
+                    {% endfor %}
+        </div>
+    </div>
+    </div>
+</div>
+<script>
+    document.getElementById('reset').addEventListener('click',function (){
+        const url = new URL(window.location.href);
+
+        url.searchParams.delete('query')
+        url.searchParams.delete('category')
+        url.searchParams.delete('price_min')
+        url.searchParams.delete('price_max')
+        url.searchParams.delete('order_by_price')
+        url.searchParams.delete('order_by_time')
+
+        window.location.href = url.toString();
+    })
+</script>
+<script>
+    const categoryFilter = document.getElementById('id_category');
+    const timeFilter = document.getElementById('id_order_by_time');
+    const priceFilter = document.getElementById('id_order_by_price');
+
+
+categoryFilter.addEventListener('change', function() {
+    this.form.submit();
+});
+timeFilter.addEventListener('change', function() {
+    this.form.submit();
+});
+priceFilter.addEventListener('change', function() {
+    this.form.submit();
+});
+</script>
+ <script>
+    function truncate_text(){
+        const texts = document.querySelectorAll('.task-desc');
+    
+       texts.forEach(function (textElement) {
+                let text = textElement.innerText; 
+                let words = text.split(' ');
+
+                
+                if (words.length > 29) {
+                    words = words.slice(0, 29);
+                    textElement.innerText = words.join(' ') + '...'; 
+                }
+            });
+        }
+
+    truncate_text();
+ </script>

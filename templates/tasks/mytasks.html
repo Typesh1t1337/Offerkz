@@ -1,0 +1,93 @@
+{% extends 'form/accountForm.html' %}
+{% block interact %}
+    {% load static %}
+<div class="user-interact-content-container">
+     <div class="tasks-page-bounce">
+            <ul>
+                <li><a href="{% url 'my_tasks' user.username %}" class="a-active">Мои задания</a></li>
+                <li><a href="{% url 'my_task_chats' user.username %}" class="a-not-active">Чаты с исполнительями</a></li>
+                <li><a href="{% url 'upload'%}" class="a-not-active">Загрузить задание</a></li>
+            </ul>
+    </div>
+    <div class="my_tasks_container">
+        <div class="my_tasks_container-overflow">
+            {% for task in my_tasks %}
+            <div class="my-tasks-card">
+                <div class="my-tasks-card-title">
+                    <div class="my-tasks-card-title-part">
+                        <p>{{ task.title }}</p>
+                    </div>
+                    <div class="my-tasks-card-interact">
+                        <i class="bi bi-three-dots"></i>
+                        <div class="menu">
+                            <ul>
+                                <li><i class="bi bi-x-lg"></i></li>
+                                <li><a class="option-links" href="{% url 'edit_task' task.id %}">Редактировать</a></li>
+                                <li><a  class="open-popup" href="#">Удалить</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="pop-up">
+                        <div class="pop-up-content">
+                            <div class="warning-icon">
+                                <div class="warning-container">
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                </div>
+                            </div>
+                            <div class="confident">
+                                <p>Вы уверены?</p>
+                            </div>
+                            <div class="warning-text">
+                                <p>Вы точно хотите удалить задание? Это действие невозвратимое</p>
+                            </div>
+                            <div class="buttons">
+                                <form method="POST" action="{% url 'delete_task'  task.id %}">
+                                    {% csrf_token %}
+                                    <button class="close-popup" style="background-color: red; color: white; border: none; margin-bottom: 5px" type="submit">Удалить</button>
+                                    <button class="close-popup" style="border: 0.5px #333333 solid;color: #333333" type="button">Отмена</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-tasks-card-desc">
+                    <p class="my-tasks-description">{{ task.description }}</p>
+                </div>
+                <div class="my-tasks-card-other-info">
+                    <div class="my-tasks-card-category">
+                        <ul>
+                            <li>{{ task.category }}</li>
+                            <li>{{ task.deadline }}</li>
+                        </ul>
+                    </div>
+                    <div class="my-tasks-card-price">
+                        <p>{{ task.price }}₸</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+    <script src="{% static 'main/functional.js' %}"></script>
+    <script src="{% static 'main/popup.js' %}"></script>
+    <script>
+    function truncate_text(){
+        const texts = document.querySelectorAll('.my-tasks-description');
+    
+       texts.forEach(function (textElement) {
+                let text = textElement.innerText; 
+                let words = text.split(' ');
+
+                
+                if (words.length > 29) {
+                    words = words.slice(0, 29);
+                    textElement.innerText = words.join(' ') + '...'; 
+                }
+            });
+        }
+
+    truncate_text();
+    </script>
+    
+{% endblock %}

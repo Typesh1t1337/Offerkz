@@ -1,0 +1,171 @@
+{% extends 'form/accountForm.html' %}
+{% block interact %}
+<div class="user-interact-content-container">
+     <div class="tasks-page-bounce">
+            <ul>
+                <li><a href="{% url 'my_tasks' user.username %}" class="a-not-active">Мои задания</a></li>
+                <li><a href="{% url 'my_task_chats' user.username %}" class="a-not-active">Чаты с исполнительями</a></li>
+                <li><a href="{% url 'upload'%}" class="a-active">Загрузить задание</a></li>
+            </ul>
+    </div>
+      <form method="post" id="form">
+          {% csrf_token %}
+            <div class="upload-task-input-container">
+                <div class="input-label-container">
+                    <label for="title">Название*</label>
+                </div>
+                <div class="input-input-container">
+                  {{ tasks_form.title }}
+                </div>
+            </div>
+            <div class="upload-task-textarea-container">
+                <div class="input-label-container">
+                     <label for="desc">Описание для задания*</label>
+                </div>
+                <div class="input-textarea-container">
+                    {{ tasks_form.description }}
+                </div>
+            </div>
+              <div class="upload-task-input-container">
+                <div class="input-label-container">
+                     <label for="selector">Выберите категорию*</label>
+                </div>
+                <div class="input-input-container">
+                   {{ tasks_form.category }}
+                </div>
+            </div>
+           <div class="upload-task-input-container">
+                <div class="input-label-container">
+                   <label for="deadline">Установите дату дедлайна*</label>
+                </div>
+                <div class="input-input-container">
+                   {{ tasks_form.deadline }}
+                </div>
+            </div>
+          <div class="upload-task-input-container">
+                <div class="input-label-container">
+                   <label for="deadline">Установите цену*</label>
+                </div>
+                <div class="input-input-container">
+                   {{ tasks_form.price }}
+                </div>
+            </div>
+          <div class="agreement">
+              <div class="input-label-container"></div>
+              <div class="agreement-form">
+                  <div class="agreement-form-half">
+                      {{ tasks_form.isAgreed }}
+                      <p>Соглашение с правилами сайта</p>
+                  </div>
+              </div>
+          </div>
+             <div class="agreement-error">
+              <div class="input-label-container"></div>
+              <div class="agreement-form">
+                  <div class="agreement-form-half">
+                      <i>{{ error_agreement }}</i>
+                  </div>
+              </div>
+          </div>
+            <div class="agreement">
+              <div class="input-label-container"></div>
+              <div class="agreement-form">
+                  <div class="agreement-form-half">
+                    <button type="submit">Загрузить</button>
+                  </div>
+              </div>
+          </div>
+      </form>
+</div>
+    <script>
+
+        const profileIcon = document.getElementById('profileIcon');
+        const profileDropdown = document.getElementById('profileDropDown');
+
+
+        profileIcon.addEventListener('click', function() {
+
+            if (!profileDropdown.classList.contains('show')) {
+                profileDropdown.classList.add('show');
+            } else {
+                profileDropdown.classList.remove('show');
+            }
+        });
+
+
+        document.addEventListener('click', function(event) {
+            if (!profileIcon.contains(event.target) && !profileDropdown.contains(event.target)) {
+                profileDropdown.classList.remove('show');
+            }
+        });
+
+    </script>
+    <script>
+            document.querySelector('form').addEventListener('submit', function (event) {
+
+
+            const title = document.querySelector('[name="title"]');
+            const description = document.querySelector('[name="description"]');
+            const category = document.querySelector('[name="category"]');
+            const price = document.querySelector('[name="price"]');
+            const deadline = document.querySelector('[name="deadline"]');
+
+
+            const errorTitle = document.querySelector('.error-title');
+            const errorDescription = document.querySelector('.error-description');
+            const errorType = document.querySelector('.error-type');
+            const errorPrice = document.querySelector('.error-price');
+            const errorDeadline = document.querySelector('.error-deadline');
+
+
+            let isValid = true;
+
+            if (!title.value.trim() || title.value.trim().length < 5) {
+                errorTitle.textContent = 'Название должно содержать минимум 5 символов.';
+                isValid = false;
+            } else {
+                errorTitle.textContent = '';
+            }
+
+
+            if (!description.value.trim() || description.value.trim().length < 20) {
+                errorDescription.textContent = 'Описание должно содержать минимум 20 символов.';
+                isValid = false;
+            } else {
+                errorDescription.textContent = '';
+            }
+
+
+            if (!category.value) {
+                errorType.textContent = 'Пожалуйста, выберите категорию.';
+                isValid = false;
+            } else {
+                errorType.textContent = '';
+            }
+
+
+            if (!price.value || price.value <= 0) {
+                errorPrice.textContent = 'Пожалуйста, введите корректную цену (больше 0).';
+                isValid = false;
+            } else {
+                errorPrice.textContent = '';
+            }
+
+
+            if (!deadline.value) {
+                errorDeadline.textContent = 'Пожалуйста, установите дату дедлайна.';
+                isValid = false;
+            } else if (new Date(deadline.value) < new Date()) {
+                errorDeadline.textContent = 'Дата дедлайна не может быть в прошлом.';
+                isValid = false;
+            } else {
+                errorDeadline.textContent = '';
+            }
+
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+    </script>
+
+{% endblock %}

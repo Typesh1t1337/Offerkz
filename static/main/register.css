@@ -1,0 +1,311 @@
+body,html{
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+
+}
+.form-container-reg{
+    width: 100%;
+    height: 100vh;
+    background-color: #EDF6F7;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .form-content-reg{
+        height: 540px;
+        width: 450px;
+        background-color: white;
+        border-radius: 20px;
+        border: 2px solid #00897B;
+        padding: 30px 20px 10px 20px;
+         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        .form-content-icon-reg{
+            height: 100px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            a{
+                color: #00897B;
+                font-size: 50px;
+                font-weight: bold;
+                text-decoration: none;
+                font-family: "Space Mono", monospace;
+                letter-spacing: 2px;
+            }
+        }
+        .form-content-input-reg{
+            width: 100%;
+            height: 440px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            form {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                .input-login-name{
+                    width: 280px;
+                    height: 40px;
+                    border: 2px solid #00897B;
+                    border-radius: 5px;
+                    color: #333333;
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    font-weight: bold;
+                    margin-bottom: 25px;
+                }
+
+                .input-login-name:focus {
+                    border: 2px solid #00897B;
+                    outline: none;
+                    box-shadow: none;
+                }
+
+                .input-group{
+                    position: relative;
+
+                    .input-login {
+                        width: 280px;
+                        height: 40px;
+                        border: 2px solid #00897B;
+                        border-radius: 5px;
+                        color: #333333;
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        font-weight: bold;
+                        margin-bottom: 25px;
+                    }
+
+                    .input-login:focus {
+                        border: 2px solid #00897B;
+                        outline: none;
+                        box-shadow: none;
+                    }
+
+                    #togglePassword {
+                        position: absolute;
+                        top: 33%;
+                        right: 10px;
+                        transform: translateY(-50%);
+                        cursor: pointer;
+                        font-size: 20px;
+                        color: #333333;
+                    }
+
+                    #togglePassword:hover {
+                        color: #00897B;
+                    }
+                }
+                .errors_reg{
+                    width: 100%;
+                    height: 40px;
+                    display: flex;
+                    flex-direction: column;
+                    font-size: 14px;
+                    color: red;
+                    align-items: center;
+                    justify-content: center;
+                    list-style: none;
+                    ul{
+                        list-style: none;
+                        margin: 0;
+                        padding: 0  ;
+                        color: red;
+                        li{
+                            list-style: none;
+                            margin-bottom: 1px;
+                        }
+                    }
+                }
+                .button {
+                    background-color: #00897B;
+                    border-radius: 8px;
+                    width: 100%;
+                    height: 40px;
+                    border: none;
+                    color: white;
+                    font-size: 16px;
+                    margin-top: 20px;
+                    cursor: pointer;
+                    transition: background 0.3s ease, transform 0.2s ease;
+                    margin-bottom: 10px;
+                }
+
+                .pop-up{
+                    position: absolute;
+                    width: 100vw;
+                    height: 100vh;
+                    background-color: rgba(0, 0, 0, 0.49);
+                    display: none;
+                    justify-content: center;
+                    align-items: center;
+                    top: 0;
+                    left: 0;
+                    opacity: 0;
+                    .pop-up-content{
+                        width: 310px;
+                        height: 300px;
+                        padding: 5px 10px;
+                        background-color: white;
+                        border-radius: 10px;
+                        position: relative;
+                        #pop-up-close{
+                            position: absolute;
+                            top: 0%;
+                            right: 1%;
+                            cursor: pointer;
+                            text-decoration: none;
+                            color: #00897B;
+                            i{
+                                font-size: 30px;
+                                color: #00897B;
+                            }
+                        }
+                        .email-icon-container {
+                            width: 100%;
+                            height: 30%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            .email-icon {
+                                width: 40px;
+                                height: 40px;
+                                border-radius: 5px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                background-color: #88d188;
+                                i{
+                                font-size: 20px;
+                                color: white;
+                                }
+                            }
+                        }
+                        .activation-code-input-container{
+                            width:100%;
+                            height: 50%;
+                            .confirm-email-container{
+                                width: 100%;
+                                height: 15%;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                p{
+                                    margin: 0;
+                                    color: #333333;
+                                    font-size: 18px;
+                                    font-weight: bold;
+
+                                }
+                            }
+                            .information-text {
+                                width: 100%;
+                                height: 50%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                text-align: center;
+
+                                p {
+                                    margin: 0;
+                                    color: #686767;
+                                    font-size: 14px;
+                                }
+                            }
+                            .code-input-container{
+                                width: 100%;
+                                height: 30%;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                input{
+                                    width: calc(100% - 10px);
+                                    height: 50%;
+                                    border-radius: 5px;
+                                    border: 1px #00897B solid;
+                                    padding: 2px 5px;
+                                    font-size: 13px;
+                                }
+                                input:focus{
+                                    outline: none;
+                                }
+                                 input[type=number]::-webkit-inner-spin-button,
+                                  input[type=number]::-webkit-outer-spin-button {
+                                    -webkit-appearance: none;
+                                    margin: 0;
+                                  }
+
+                                  input[type=number] {
+                                    -moz-appearance: textfield;
+                                  }
+                            }
+                        }
+                        .submit-button{
+                            width: 100%;
+                            height: 20%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            button{
+                                width: 100%;
+                                height: 55%;
+                                padding: 5px 10px;
+                                border: none;
+                                background-color: #00897B;
+                                color: white;
+                                border-radius: 7px;
+                            }
+                        }
+                    }
+                }
+                .pop-up.open{
+                    display: flex;
+                    opacity: 1;
+                }
+
+                .forget-password {
+                    height: 20px;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+
+                    a {
+                        text-decoration: none;
+                        color: #333333;
+                        font-size: 14px;
+                        cursor: pointer;
+                    }
+
+                    a:hover {
+                        color: #00897B;
+                    }
+                }
+
+                .form-content-text {
+                    height: 30px;
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    a {
+                        text-decoration: none;
+                        color: #333333;
+                        font-size: 14px;
+                        cursor: pointer;
+                    }
+
+                    a:hover {
+                        color: #00897B;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
